@@ -26,6 +26,13 @@ define( 'YS_LQS_FILE', __FILE__ );
 define( 'YS_LQS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'YS_LQS_URL', plugin_dir_url( __FILE__ ) );
 
+add_action( 'before_woocommerce_init', function () {
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__ );
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__ );
+	}
+} );
+
 add_action( 'plugins_loaded', 'ys_lqs_init' );
 
 function ys_lqs_init() {
