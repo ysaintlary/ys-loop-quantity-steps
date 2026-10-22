@@ -81,6 +81,52 @@
 	border: 0;
 }
 
+/* --- Single product page quantity harmonization --- */
+
+.single-product .quantity {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid var(--wp--preset--color--contrast, currentColor);
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.single-product .quantity .qty {
+	width: 3.5em;
+	min-height: 44px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: inherit;
+	font-size: inherit;
+	text-align: center;
+	-moz-appearance: textfield;
+}
+
+.single-product .quantity .qty::-webkit-inner-spin-button,
+.single-product .quantity .qty::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.single-product .quantity .qty:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #007cba);
+	outline-offset: -2px;
+}
+
+.single-product form.cart {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.single-product form.cart .single_add_to_cart_button {
+	min-height: 44px;
+}
+
+/* --- Loop product button layout --- */
+
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) {
 	flex-direction: row;
 	flex-wrap: wrap;

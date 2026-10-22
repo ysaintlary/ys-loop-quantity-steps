@@ -47,6 +47,7 @@ function ys_lqs_init() {
 	}
 
 	add_action( 'wp_enqueue_scripts', 'ys_lqs_register_assets' );
+	add_action( 'wp_enqueue_scripts', 'ys_lqs_enqueue_single_product_styles' );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_filter_link', 20, 3 );
 }
 
@@ -64,6 +65,12 @@ function ys_lqs_register_assets() {
 		array( '@wordpress/interactivity' ),
 		YS_LQS_VERSION
 	);
+}
+
+function ys_lqs_enqueue_single_product_styles() {
+	if ( is_product() ) {
+		wp_enqueue_style( 'ys-loop-quantity-steps' );
+	}
 }
 
 /**
