@@ -49,6 +49,7 @@ function ys_lqs_init() {
 	add_action( 'wp_enqueue_scripts', 'ys_lqs_register_assets' );
 	add_action( 'wp_enqueue_scripts', 'ys_lqs_enqueue_single_product_styles' );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_filter_link', 20, 3 );
+	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_out_of_stock_link', 10, 2 );
 }
 
 function ys_lqs_register_assets() {
@@ -70,7 +71,67 @@ function ys_lqs_register_assets() {
 function ys_lqs_enqueue_single_product_styles() {
 	if ( is_product() ) {
 		wp_enqueue_style( 'ys-loop-quantity-steps' );
+		wp_add_inline_script( 'jquery-core', ys_lqs_get_single_product_js() );
 	}
+}
+
+function ys_lqs_get_single_product_js() {
+	return <<<'JS'
+document.addEventListener("DOMContentLoaded",function(){
+	document.querySelectorAll(".single-product .quantity").forEach(function(wrap){
+		var input=wrap.querySelector(".qty");
+		if(!input||wrap.querySelector(".ys-lqs-btn"))return;
+		var min=parseFloat(input.min)||1,max=parseFloat(input.max)||9999,step=parseFloat(input.step)||1;
+		var btnM=document.createElement("button");
+		btnM.type="button";btnM.className="ys-lqs-btn ys-lqs-btn--minus";
+		btnM.innerHTML='<span aria-hidden="true">−</span>';
+		btnM.setAttribute("aria-label","Diminuer la quantité");
+		var btnP=document.createElement("button");
+		btnP.type="button";btnP.className="ys-lqs-btn ys-lqs-btn--plus";
+		btnP.innerHTML='<span aria-hidden="true">+</span>';
+		btnP.setAttribute("aria-label","Augmenter la quantité");
+		wrap.insertBefore(btnM,input);
+		input.parentNode.insertBefore(btnP,input.nextSibling);
+		function upd(){
+			var v=parseFloat(input.value)||min;
+			btnM.disabled=v<=min;btnP.disabled=v>=max;
+		}
+		btnM.addEventListener("click",function(){
+			var v=parseFloat(input.value)||min;
+			v=Math.max(min,v-step);input.value=v;
+			input.dispatchEvent(new Event("change",{bubbles:true}));upd();
+		});
+		btnP.addEventListener("click",function(){
+			var v=parseFloat(input.value)||min;
+			v=Math.min(max,v+step);input.value=v;
+			input.dispatchEvent(new Event("change",{bubbles:true}));upd();
+		});
+		input.addEventListener("change",upd);
+		upd();
+	});
+});
+JS;
+}
+
+function ys_lqs_out_of_stock_link( $html, $product ) {
+	if ( $product->is_in_stock() ) {
+		return $html;
+	}
+
+	$text = esc_html__( 'Rupture de stock', 'ys-loop-quantity-steps' );
+
+	$html = preg_replace(
+		'/>([^<]*Lire la suite[^<]*)</',
+		'>' . $text . '<',
+		$html
+	);
+	$html = preg_replace(
+		'/>([^<]*Read more[^<]*)</',
+		'>' . $text . '<',
+		$html
+	);
+
+	return $html;
 }
 
 /**
