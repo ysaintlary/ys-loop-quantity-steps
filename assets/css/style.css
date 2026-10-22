@@ -119,12 +119,24 @@
 .single-product form.cart {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: stretch;
 	gap: 0.5em;
 }
 
+.single-product form.cart .quantity {
+	margin: 0;
+}
+
+.single-product .quantity .qty {
+	margin: 0;
+	padding: 0;
+}
+
 .single-product form.cart .single_add_to_cart_button {
-	min-height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
 }
 
 /* --- Loop view-cart link --- */
