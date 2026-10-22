@@ -92,4 +92,7 @@
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) .wp-block-button__link,
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) .wc-block-components-product-button__button {
 	width: auto;
+	min-height: 44px;
+	display: inline-flex;
+	align-items: center;
 }
