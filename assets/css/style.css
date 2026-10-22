@@ -139,16 +139,16 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
 	gap: 0.5em;
 }
 
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) .wp-block-button__link,
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) .wc-block-components-product-button__button {
 	width: auto;
-	min-height: 44px;
 	box-sizing: border-box;
 	display: inline-flex;
 	align-items: center;
+	justify-content: center;
 	border-radius: 4px;
 }
