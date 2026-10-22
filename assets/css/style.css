@@ -127,6 +127,12 @@
 	min-height: 44px;
 }
 
+/* --- Loop view-cart link --- */
+
+.wc-block-components-product-button .added_to_cart {
+	color: var(--wp--preset--color--neutral-900, currentColor);
+}
+
 /* --- Loop product button layout --- */
 
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) {
