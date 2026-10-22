@@ -139,6 +139,8 @@
 .wp-block-button.wc-block-components-product-button:has(.ys-lqs-selector) .wc-block-components-product-button__button {
 	width: auto;
 	min-height: 44px;
+	box-sizing: border-box;
 	display: inline-flex;
 	align-items: center;
+	border-radius: 4px;
 }
