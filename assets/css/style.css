@@ -4,7 +4,6 @@
 
 .ys-lqs-selector {
 	text-align: center;
-	margin-bottom: 0.5em;
 }
 
 .ys-lqs-controls {
@@ -84,11 +83,13 @@
 
 .wc-block-components-product-button:has(.ys-lqs-selector) {
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
 	align-items: center;
 	gap: 0.5em;
 }
 
-.wc-block-components-product-button:has(.ys-lqs-selector) .ys-lqs-selector {
-	margin-bottom: 0;
+.wc-block-components-product-button:has(.ys-lqs-selector) .wp-block-button__link,
+.wc-block-components-product-button:has(.ys-lqs-selector) .wc-block-components-product-button__button {
+	width: auto;
 }
