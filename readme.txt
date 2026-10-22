@@ -4,7 +4,7 @@ Tags: woocommerce, quantity, step, product-collection, blocks
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,10 @@ Sur les listes de produits (bloc Collection de produits), remplace le simple bou
 Les règles de quantité sont lues depuis WooCommerce (via QuantityLimits) et prennent en compte les plugins tiers comme WooCommerce Quantity Manager de Barn2.
 
 == Changelog ==
+
+= 1.0.4 =
+* Add - feat: harmonize single product page quantity input with loop selector.
+
 
 = 1.0.3 =
 * Fix - fix: match add-to-cart button height with quantity selector (44px).
