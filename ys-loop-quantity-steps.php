@@ -97,6 +97,15 @@ function ys_lqs_get_product_limits( $product ) {
 		);
 	}
 
+	if ( $product->managing_stock() ) {
+		$stock = (int) $product->get_stock_quantity();
+		if ( $stock > 0 && $stock < $limits['multiple_of'] ) {
+			$limits['minimum']     = $stock;
+			$limits['maximum']     = $stock;
+			$limits['multiple_of'] = $stock;
+		}
+	}
+
 	return apply_filters( 'ys_lqs_product_limits', $limits, $product );
 }
 
