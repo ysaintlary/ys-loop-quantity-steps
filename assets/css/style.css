@@ -3,6 +3,7 @@
  */
 
 .ys-lqs-selector {
+	text-align: center;
 	margin-bottom: 0.5em;
 }
 
@@ -69,12 +70,6 @@
 	outline-offset: -2px;
 }
 
-.ys-lqs-lot-info {
-	font-size: 0.875em;
-	margin: 0 0 0.25em;
-	opacity: 0.75;
-}
-
 .ys-lqs-sr-only {
 	position: absolute;
 	width: 1px;
@@ -89,7 +84,7 @@
 
 .wc-block-components-product-button:has(.ys-lqs-selector) {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 	align-items: center;
 	gap: 0.5em;
 }

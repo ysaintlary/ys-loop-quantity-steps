@@ -143,28 +143,6 @@ function ys_lqs_filter_link( $html, $product, $args ) {
 	}
 	$html = $processor->get_updated_html();
 
-	if ( $limits['minimum'] === $limits['maximum'] ) {
-		$lot_html = sprintf(
-			'<p class="ys-lqs-lot-info">%s</p>',
-			esc_html(
-				sprintf(
-					/* translators: %d: lot size */
-					__( 'Vendu par lot de %d', 'ys-loop-quantity-steps' ),
-					$limits['minimum']
-				)
-			)
-		);
-
-		$button_pos = strpos( $html, '<button' );
-		if ( false === $button_pos ) {
-			return $html;
-		}
-
-		wp_enqueue_style( 'ys-loop-quantity-steps' );
-
-		return substr( $html, 0, $button_pos ) . $lot_html . substr( $html, $button_pos );
-	}
-
 	$product_name = $product->get_name();
 	$input_id     = 'ys-lqs-qty-' . $product->get_id();
 
