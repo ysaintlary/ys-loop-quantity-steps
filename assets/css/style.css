@@ -1,0 +1,99 @@
+/**
+ * YS Loop Quantity Steps
+ */
+
+.ys-lqs-selector {
+	margin-bottom: 0.5em;
+}
+
+.ys-lqs-controls {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid var(--wp--preset--color--contrast, currentColor);
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.ys-lqs-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: inherit;
+	font-size: 1.25em;
+	line-height: 1;
+	cursor: pointer;
+	transition: opacity 0.15s ease;
+}
+
+.ys-lqs-btn:hover:not(:disabled) {
+	opacity: 0.6;
+}
+
+.ys-lqs-btn:disabled {
+	opacity: 0.25;
+	cursor: not-allowed;
+}
+
+.ys-lqs-btn:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #007cba);
+	outline-offset: -2px;
+}
+
+.ys-lqs-input {
+	width: 3.5em;
+	min-height: 44px;
+	padding: 0;
+	border: none;
+	border-inline-start: 1px solid var(--wp--preset--color--contrast, currentColor);
+	border-inline-end: 1px solid var(--wp--preset--color--contrast, currentColor);
+	background: transparent;
+	color: inherit;
+	font-size: inherit;
+	text-align: center;
+	-moz-appearance: textfield;
+}
+
+.ys-lqs-input::-webkit-inner-spin-button,
+.ys-lqs-input::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.ys-lqs-input:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary, #007cba);
+	outline-offset: -2px;
+}
+
+.ys-lqs-lot-info {
+	font-size: 0.875em;
+	margin: 0 0 0.25em;
+	opacity: 0.75;
+}
+
+.ys-lqs-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.wc-block-components-product-button:has(.ys-lqs-selector) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.wc-block-components-product-button:has(.ys-lqs-selector) .ys-lqs-selector {
+	margin-bottom: 0;
+}

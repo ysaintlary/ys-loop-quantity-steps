@@ -1,0 +1,22 @@
+=== YS | Quantités par paliers dans les listes ===
+Contributors: ysaintlary
+Tags: woocommerce, quantity, step, product-collection, blocks
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 7.4
+Stable tag: 1.0.0
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Ajoute un sélecteur de quantité (−/+) respectant les paliers et quantités minimales sur les listes de produits WooCommerce en thème à blocs.
+
+== Description ==
+
+Sur les listes de produits (bloc Collection de produits), remplace le simple bouton « Ajouter au panier » par un sélecteur de quantité (bouton −, champ, bouton +) suivi du bouton d'ajout, en respectant la quantité minimale et le palier de chaque produit.
+
+Les règles de quantité sont lues depuis WooCommerce (via QuantityLimits) et prennent en compte les plugins tiers comme WooCommerce Quantity Manager de Barn2.
+
+== Changelog ==
+
+= 1.0.0 =
+* Version initiale.
