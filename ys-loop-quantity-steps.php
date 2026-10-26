@@ -56,6 +56,7 @@ function ys_lqs_init() {
 	add_filter( 'woocommerce_store_api_product_quantity_multiple_of', 'ys_lqs_cap_store_api_min_step', 11, 2 );
 	add_filter( 'woocommerce_store_api_product_quantity_maximum', 'ys_lqs_cap_store_api_max', 11, 2 );
 	add_filter( 'woocommerce_add_to_cart_quantity', 'ys_lqs_cap_add_to_cart_qty', 11, 2 );
+	add_filter( 'wc_quantity_manager_quantity_step_rule_value', 'ys_lqs_cap_barn2_step_rule', 10, 2 );
 }
 
 function ys_lqs_register_assets() {
@@ -221,6 +222,25 @@ function ys_lqs_cap_add_to_cart_qty( $quantity, $product_id ) {
 	}
 
 	return $quantity;
+}
+
+/**
+ * @param int                                                    $value
+ * @param \Barn2\Plugin\WC_Quantity_Manager\Rules\Quantity_Step $rule
+ * @return int
+ */
+function ys_lqs_cap_barn2_step_rule( $value, $rule ) {
+	$product = $rule->product;
+	if ( ! $product->managing_stock() ) {
+		return $value;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock > 0 && $value > $stock ) {
+		return $stock;
+	}
+
+	return $value;
 }
 
 function ys_lqs_out_of_stock_link( $html, $product ) {
