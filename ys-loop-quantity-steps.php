@@ -50,7 +50,7 @@ function ys_lqs_init() {
 	add_action( 'wp_enqueue_scripts', 'ys_lqs_enqueue_single_product_styles' );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_filter_link', 20, 3 );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_out_of_stock_link', 10, 2 );
-	add_filter( 'woocommerce_product_is_in_stock', 'ys_lqs_override_stock_status', 100, 2 );
+	add_filter( 'wc_quantity_manager_is_in_stock', 'ys_lqs_override_barn2_stock_status', 10, 3 );
 }
 
 function ys_lqs_register_assets() {
@@ -117,10 +117,11 @@ JS;
 /**
  * @param bool        $is_in_stock
  * @param \WC_Product $product
+ * @param array       $restrictions
  * @return bool
  */
-function ys_lqs_override_stock_status( $is_in_stock, $product ) {
-	if ( $is_in_stock || ! $product->managing_stock() ) {
+function ys_lqs_override_barn2_stock_status( $is_in_stock, $product, $restrictions ) {
+	if ( $is_in_stock ) {
 		return $is_in_stock;
 	}
 
