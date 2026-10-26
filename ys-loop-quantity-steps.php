@@ -51,6 +51,11 @@ function ys_lqs_init() {
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_filter_link', 20, 3 );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_out_of_stock_link', 10, 2 );
 	add_filter( 'wc_quantity_manager_is_in_stock', 'ys_lqs_override_barn2_stock_status', 10, 3 );
+	add_filter( 'woocommerce_quantity_input_args', 'ys_lqs_cap_quantity_input_to_stock', 1000, 2 );
+	add_filter( 'woocommerce_store_api_product_quantity_minimum', 'ys_lqs_cap_store_api_min_step', 11, 2 );
+	add_filter( 'woocommerce_store_api_product_quantity_multiple_of', 'ys_lqs_cap_store_api_min_step', 11, 2 );
+	add_filter( 'woocommerce_store_api_product_quantity_maximum', 'ys_lqs_cap_store_api_max', 11, 2 );
+	add_filter( 'woocommerce_add_to_cart_quantity', 'ys_lqs_cap_add_to_cart_qty', 11, 2 );
 }
 
 function ys_lqs_register_assets() {
@@ -131,6 +136,91 @@ function ys_lqs_override_barn2_stock_status( $is_in_stock, $product, $restrictio
 	}
 
 	return $is_in_stock;
+}
+
+/**
+ * @param array       $args
+ * @param \WC_Product $product
+ * @return array
+ */
+function ys_lqs_cap_quantity_input_to_stock( $args, $product ) {
+	if ( ! $product->managing_stock() ) {
+		return $args;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock <= 0 ) {
+		return $args;
+	}
+
+	$min  = (int) ( $args['min_value'] ?? 1 );
+	$step = (int) ( $args['step'] ?? 1 );
+
+	if ( $stock >= $min && $stock >= $step ) {
+		return $args;
+	}
+
+	$args['min_value']   = $stock;
+	$args['max_value']   = $stock;
+	$args['step']        = $stock;
+	$args['input_value'] = $stock;
+
+	return $args;
+}
+
+/**
+ * @param int         $qty
+ * @param \WC_Product $product
+ * @return int
+ */
+function ys_lqs_cap_store_api_min_step( $qty, $product ) {
+	if ( ! $product->managing_stock() ) {
+		return $qty;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock > 0 && $qty > $stock ) {
+		return $stock;
+	}
+
+	return $qty;
+}
+
+/**
+ * @param int         $qty
+ * @param \WC_Product $product
+ * @return int
+ */
+function ys_lqs_cap_store_api_max( $qty, $product ) {
+	if ( ! $product->managing_stock() ) {
+		return $qty;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock > 0 && ( $qty > $stock || 0 === $qty ) ) {
+		return $stock;
+	}
+
+	return $qty;
+}
+
+/**
+ * @param int $quantity
+ * @param int $product_id
+ * @return int
+ */
+function ys_lqs_cap_add_to_cart_qty( $quantity, $product_id ) {
+	$product = wc_get_product( $product_id );
+	if ( ! $product || ! $product->managing_stock() ) {
+		return $quantity;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock > 0 && $quantity > $stock ) {
+		return $stock;
+	}
+
+	return $quantity;
 }
 
 function ys_lqs_out_of_stock_link( $html, $product ) {
