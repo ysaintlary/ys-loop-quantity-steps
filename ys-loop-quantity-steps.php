@@ -3,7 +3,7 @@
  * Plugin Name:       YS | Quantités par paliers dans les listes de produits
  * Plugin URI:        https://github.com/ysaintlary/ys-loop-quantity-steps
  * Description:       Ajoute un sélecteur de quantité (−/+) respectant les paliers et quantités minimales sur les listes de produits WooCommerce en thème à blocs.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            Yves Saint-Lary
@@ -50,6 +50,7 @@ function ys_lqs_init() {
 	add_action( 'wp_enqueue_scripts', 'ys_lqs_enqueue_single_product_styles' );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_filter_link', 20, 3 );
 	add_filter( 'woocommerce_loop_add_to_cart_link', 'ys_lqs_out_of_stock_link', 10, 2 );
+	add_filter( 'woocommerce_product_is_in_stock', 'ys_lqs_override_stock_status', 100, 2 );
 }
 
 function ys_lqs_register_assets() {
@@ -111,6 +112,24 @@ document.addEventListener("DOMContentLoaded",function(){
 	});
 });
 JS;
+}
+
+/**
+ * @param bool        $is_in_stock
+ * @param \WC_Product $product
+ * @return bool
+ */
+function ys_lqs_override_stock_status( $is_in_stock, $product ) {
+	if ( $is_in_stock || ! $product->managing_stock() ) {
+		return $is_in_stock;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock > 0 ) {
+		return true;
+	}
+
+	return $is_in_stock;
 }
 
 function ys_lqs_out_of_stock_link( $html, $product ) {
