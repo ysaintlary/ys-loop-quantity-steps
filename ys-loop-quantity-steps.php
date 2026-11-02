@@ -3,7 +3,7 @@
  * Plugin Name:       YS | Quantités par paliers dans les listes de produits
  * Plugin URI:        https://github.com/ysaintlary/ys-loop-quantity-steps
  * Description:       Ajoute un sélecteur de quantité (−/+) respectant les paliers et quantités minimales sur les listes de produits WooCommerce en thème à blocs.
- * Version: 1.0.13
+ * Version: 1.0.14
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            Yves Saint-Lary
@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	document.querySelectorAll(".single-product .quantity").forEach(function(wrap){
 		var input=wrap.querySelector(".qty");
 		if(!input||wrap.querySelector(".ys-lqs-btn"))return;
+		if(input.type==="hidden")input.type="number";
 		var min=parseFloat(input.min)||1,max=parseFloat(input.max)||9999,step=parseFloat(input.step)||1;
 		var btnM=document.createElement("button");
 		btnM.type="button";btnM.className="ys-lqs-btn ys-lqs-btn--minus";
