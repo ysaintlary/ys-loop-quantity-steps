@@ -3,7 +3,7 @@ Contributors: ysaintlary
 Tags: woocommerce, quantity, step, product-collection, blocks
 Requires at least: 6.6
 Tested up to: 7.1
-Requires PHP: 8.4
+Requires PHP: 8.0
 Stable tag: 1.0.21
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
