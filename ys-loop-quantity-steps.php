@@ -5,7 +5,7 @@
  * Description:       Ajoute un sélecteur de quantité (−/+) respectant les paliers et quantités minimales sur les listes de produits WooCommerce en thème à blocs.
  * Version: 1.0.20
  * Requires at least: 6.6
- * Requires PHP:      7.4
+ * Requires PHP:      8.4
  * Author:            Yves Saint-Lary
  * Author URI:        https://ysaintlary.com
  * License:           GPL-2.0-or-later
