@@ -127,10 +127,10 @@ JS;
 /**
  * @param bool        $is_in_stock
  * @param \WC_Product $product
- * @param array       $restrictions
+ * @param array       $_restrictions
  * @return bool
  */
-function ys_lqs_override_barn2_stock_status( $is_in_stock, $product, $restrictions ) {
+function ys_lqs_override_barn2_stock_status( $is_in_stock, $product, $_restrictions ) {
 	if ( $is_in_stock ) {
 		return $is_in_stock;
 	}
@@ -322,10 +322,10 @@ function ys_lqs_get_start_quantity( $product, $limits ) {
 /**
  * @param string      $html
  * @param \WC_Product $product
- * @param array       $args
+ * @param array       $_args
  * @return string
  */
-function ys_lqs_filter_link( $html, $product, $args ) {
+function ys_lqs_filter_link( $html, $product, $_args ) {
 	if ( ! $product->is_type( 'simple' ) ) {
 		return $html;
 	}
