@@ -4,7 +4,7 @@ Tags: woocommerce, quantity, step, product-collection, blocks
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.4
-Stable tag: 1.0.20
+Stable tag: 1.0.21
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,22 @@ Sur les listes de produits (bloc Collection de produits), remplace le simple bou
 Les règles de quantité sont lues depuis WooCommerce (via QuantityLimits) et prennent en compte les plugins tiers comme WooCommerce Quantity Manager de Barn2.
 
 == Changelog ==
+
+= 1.0.21 =
+* Fix - fix: align Requires PHP header with PHP_VERSION (8.4).
+* Update - Release 1.0.20.
+* Fix - fix: align readme.txt title with PLUGIN_NAME.
+* Update - Release 1.0.19.
+* Add - chore: add quality-pack and security-pack managed files.
+* Update - Release 1.0.18.
+* Fix - fix: normalize dependabot.yml receipt hash for cross-platform CI.
+* Update - Release 1.0.17.
+* Add - chore: add WP_PLUGIN_BASE_PLUGIN_CHECK_STRICT_WARNINGS required by security-sensitive mode.
+* Update - Release 1.0.16.
+* Update - Revert "chore: bump version to 1.0.16".
+* Update - chore: bump version to 1.0.16.
+* Add - chore: add readiness/quality/security packs and runtime updater config.
+
 
 = 1.0.20 =
 * Fix - fix: align readme.txt title with PLUGIN_NAME.
