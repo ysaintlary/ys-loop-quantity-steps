@@ -1,4 +1,4 @@
-=== YS | Quantités par paliers dans les listes ===
+=== YS | Quantités par paliers dans les listes de produits ===
 Contributors: ysaintlary
 Tags: woocommerce, quantity, step, product-collection, blocks
 Requires at least: 6.6
