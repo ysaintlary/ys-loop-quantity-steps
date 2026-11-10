@@ -10,3 +10,29 @@ declare(strict_types=1);
  * hooks or optional integration bootstrap code. The managed bootstrap scope
  * exposes $plugin_file and $tests_dir when you need them.
  */
+
+if ( ! function_exists( 'plugin_dir_path' ) ) {
+	function plugin_dir_path( $file ) {
+		return trailingslashit( dirname( $file ) );
+	}
+}
+
+if ( ! function_exists( 'plugin_dir_url' ) ) {
+	function plugin_dir_url( $file ) {
+		return trailingslashit( dirname( $file ) );
+	}
+}
+
+if ( ! function_exists( 'trailingslashit' ) ) {
+	function trailingslashit( $value ) {
+		return rtrim( $value, '/\\' ) . '/';
+	}
+}
+
+if ( ! function_exists( 'add_action' ) ) {
+	function add_action( $hook, $callback, $priority = 10, $accepted_args = 1 ) {}
+}
+
+if ( ! function_exists( 'add_filter' ) ) {
+	function add_filter( $hook, $callback, $priority = 10, $accepted_args = 1 ) {}
+}
