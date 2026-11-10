@@ -4,7 +4,7 @@ Tags: woocommerce, quantity, step, product-collection, blocks
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.37
+Stable tag: 1.0.38
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,35 @@ Sur les listes de produits (bloc Collection de produits), remplace le simple bou
 Les règles de quantité sont lues depuis WooCommerce (via QuantityLimits) et prennent en compte les plugins tiers comme WooCommerce Quantity Manager de Barn2.
 
 == Changelog ==
+
+= 1.0.38 =
+* Fix - fix: exclude PUC lib from PHPCS security pack scanning.
+* Update - Release 1.0.37.
+* Fix - fix: add WordPress function stubs for standalone PHPUnit bootstrap.
+* Update - Release 1.0.36.
+* Fix - fix: correct Barn2 namespace regex escaping in PHPStan config.
+* Update - Release 1.0.35.
+* Fix - fix: configure PHPStan overlay for WooCommerce/Barn2 stubs absence.
+* Update - Release 1.0.34.
+* Fix - fix: use Generic (not Universal) sniff name for unused parameter exclusion.
+* Update - Release 1.0.33.
+* Fix - fix: exclude UnusedFunctionParameter sniff from quality pack.
+* Fix - fix: use broad phpcs:ignore for unused filter callback params.
+* Update - Release 1.0.32.
+* Fix - fix: use correct PHPCS sniff name for unused parameter suppression.
+* Update - Release 1.0.31.
+* Fix - fix: suppress PHPCS unused parameter warnings on filter callbacks.
+* Update - Release 1.0.30.
+* Fix - fix: resolve PHPCS warnings blocking release.
+* Update - Release 1.0.29.
+* Fix - fix: resolve PHPCS errors blocking release.
+* Update - Release 1.0.28.
+* Fix - fix: add readme language exclusions for Plugin Check.
+* Update - Release 1.0.27.
+* Fix - fix: correct Plugin Check exclusion (use check slug + add missing ignore codes).
+* Update - Release 1.0.26.
+* Update - chore: re-enable readiness/quality/security packs with PUC exclusions.
+
 
 = 1.0.37 =
 * Fix - fix: add WordPress function stubs for standalone PHPUnit bootstrap.
