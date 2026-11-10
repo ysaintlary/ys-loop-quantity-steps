@@ -10,7 +10,7 @@ parameters:
   ignoreErrors:
     -
       identifier: class.notFound
-      message: '#WC_Product|Barn2\\\\Plugin#'
+      message: '#WC_Product|Barn2\\Plugin#'
     -
       identifier: function.notFound
       message: '#is_product|wc_get_product|wc_get_quantity_input_args#'
