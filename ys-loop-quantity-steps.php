@@ -56,7 +56,7 @@ function ys_lqs_init() {
 	add_filter( 'wc_quantity_manager_is_in_stock', 'ys_lqs_override_barn2_stock_status', 10, 3 );
 	add_filter( 'woocommerce_quantity_input_args', 'ys_lqs_cap_quantity_input_to_stock', 1000, 2 );
 	add_filter( 'woocommerce_store_api_product_quantity_minimum', 'ys_lqs_cap_store_api_min_step', 11, 2 );
-	add_filter( 'woocommerce_store_api_product_quantity_multiple_of', 'ys_lqs_cap_store_api_min_step', 11, 2 );
+	add_filter( 'woocommerce_store_api_product_quantity_multiple_of', 'ys_lqs_cap_store_api_step', 11, 2 );
 	add_filter( 'woocommerce_store_api_product_quantity_maximum', 'ys_lqs_cap_store_api_max', 11, 2 );
 	add_filter( 'woocommerce_add_to_cart_quantity', 'ys_lqs_cap_add_to_cart_qty', 11, 2 );
 	add_filter( 'wc_quantity_manager_quantity_step_rule_value', 'ys_lqs_cap_barn2_step_rule', 10, 2 );
@@ -109,7 +109,8 @@ document.addEventListener("DOMContentLoaded",function(){
 		}
 		btnM.addEventListener("click",function(){
 			var v=parseFloat(input.value)||min;
-			v=Math.max(min,v-step);input.value=v;
+			var offset=(v-min)%step;
+			v=Math.max(min,offset?v-offset:v-step);input.value=v;
 			input.dispatchEvent(new Event("change",{bubbles:true}));upd();
 		});
 		btnP.addEventListener("click",function(){
@@ -210,6 +211,32 @@ function ys_lqs_cap_store_api_max( $qty, $product ) {
 }
 
 /**
+ * @param int         $step
+ * @param \WC_Product $product
+ * @return int
+ */
+function ys_lqs_cap_store_api_step( $step, $product ) {
+	if ( ! $product->managing_stock() || $product->backorders_allowed() ) {
+		return $step;
+	}
+
+	$stock = (int) $product->get_stock_quantity();
+	if ( $stock <= 0 ) {
+		return $step;
+	}
+
+	if ( $stock < $step ) {
+		return $stock;
+	}
+
+	if ( $stock % $step !== 0 ) {
+		return 1;
+	}
+
+	return $step;
+}
+
+/**
  * @param int $quantity
  * @param int $product_id
  * @return int
@@ -273,14 +300,21 @@ function ys_lqs_out_of_stock_link( $html, $product ) {
  * @return array{minimum: int, maximum: int, multiple_of: int}
  */
 function ys_lqs_get_product_limits( $product ) {
+	$raw_args = wc_get_quantity_input_args( array(), $product );
+	$raw_step = max( 1, (int) ( $raw_args['step'] ?? 1 ) );
+	$raw_max  = ( '' === ( $raw_args['max_value'] ?? '' ) ) ? 0 : (int) $raw_args['max_value'];
+
 	if ( class_exists( 'Automattic\\WooCommerce\\StoreApi\\Utilities\\QuantityLimits' ) ) {
 		$qty_limits = new \Automattic\WooCommerce\StoreApi\Utilities\QuantityLimits();
 		$limits     = $qty_limits->get_add_to_cart_limits( $product );
+		$limits['multiple_of'] = $raw_step;
+		$limits['minimum']     = (int) ( ceil( $limits['minimum'] / $raw_step ) * $raw_step );
+		$limits['maximum']     = (int) ( floor( $limits['maximum'] / $raw_step ) * $raw_step );
+		$limits['maximum']     = max( $limits['minimum'], $limits['maximum'] );
 	} else {
-		$args = wc_get_quantity_input_args( array(), $product );
-		$step = max( 1, (int) ( $args['step'] ?? 1 ) );
-		$min  = max( 1, (int) ( $args['min_value'] ?? 1 ) );
-		$max  = ( '' === ( $args['max_value'] ?? '' ) ) ? 9999 : (int) $args['max_value'];
+		$step = $raw_step;
+		$min  = max( 1, (int) ( $raw_args['min_value'] ?? 1 ) );
+		$max  = ( '' === ( $raw_args['max_value'] ?? '' ) ) ? 9999 : (int) $raw_args['max_value'];
 		$min  = (int) ( ceil( $min / $step ) * $step );
 		$max  = (int) ( floor( $max / $step ) * $step );
 		$max  = max( $min, $max );
@@ -298,6 +332,11 @@ function ys_lqs_get_product_limits( $product ) {
 			$limits['minimum']     = $stock;
 			$limits['maximum']     = $stock;
 			$limits['multiple_of'] = $stock;
+		} elseif ( $stock > 0 && ! $product->backorders_allowed() ) {
+			$step_aligned_stock = (int) ( floor( $stock / $limits['multiple_of'] ) * $limits['multiple_of'] );
+			if ( $stock > $step_aligned_stock && ( 0 === $raw_max || $raw_max >= $stock ) ) {
+				$limits['maximum'] = $stock;
+			}
 		}
 	}
 

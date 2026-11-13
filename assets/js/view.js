@@ -14,12 +14,21 @@ function syncToWooCommerce( value ) {
 }
 
 function snap( value, min, max, step ) {
+	if ( value >= max ) {
+		return max;
+	}
+	if ( value <= min ) {
+		return min;
+	}
 	let v = Math.round( value / step ) * step;
 	if ( v < min ) {
 		v = min;
 	}
 	if ( v > max ) {
-		v = max;
+		v = Math.floor( max / step ) * step;
+		if ( v < min ) {
+			v = min;
+		}
 	}
 	return v;
 }
@@ -38,7 +47,8 @@ store( 'ys/loop-quantity', {
 	actions: {
 		decrease() {
 			const ctx = getContext();
-			const v = Math.max( ctx.value - ctx.step, ctx.min );
+			const offset = ( ctx.value - ctx.min ) % ctx.step;
+			const v = Math.max( offset ? ctx.value - offset : ctx.value - ctx.step, ctx.min );
 			ctx.value = v;
 			ctx.announcement = '';
 			syncToWooCommerce( v );
