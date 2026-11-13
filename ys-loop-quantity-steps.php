@@ -229,7 +229,7 @@ function ys_lqs_cap_store_api_step( $step, $product ) {
 		return $stock;
 	}
 
-	if ( $stock % $step !== 0 ) {
+	if ( 0 !== $stock % $step ) {
 		return 1;
 	}
 
@@ -305,8 +305,8 @@ function ys_lqs_get_product_limits( $product ) {
 	$raw_max  = ( '' === ( $raw_args['max_value'] ?? '' ) ) ? 0 : (int) $raw_args['max_value'];
 
 	if ( class_exists( 'Automattic\\WooCommerce\\StoreApi\\Utilities\\QuantityLimits' ) ) {
-		$qty_limits = new \Automattic\WooCommerce\StoreApi\Utilities\QuantityLimits();
-		$limits     = $qty_limits->get_add_to_cart_limits( $product );
+		$qty_limits            = new \Automattic\WooCommerce\StoreApi\Utilities\QuantityLimits();
+		$limits                = $qty_limits->get_add_to_cart_limits( $product );
 		$limits['multiple_of'] = $raw_step;
 		$limits['minimum']     = (int) ( ceil( $limits['minimum'] / $raw_step ) * $raw_step );
 		$limits['maximum']     = (int) ( floor( $limits['maximum'] / $raw_step ) * $raw_step );
